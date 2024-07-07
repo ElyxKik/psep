@@ -9,11 +9,19 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+import firebase_admin
+from firebase_admin import credentials
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+FIREBASE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'cisep/psep-ba755-firebase-adminsdk-2x5cd-7f3ffbf37b.json')
+
+cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
+firebase_admin.initialize_app(cred)
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -150,6 +158,7 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
 
 NPM_BIN_PATH = r"C:\\Program Files\\nodejs\\npm.cmd"
 
