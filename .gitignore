@@ -8,7 +8,7 @@ __pycache__
 # Ignore les fichiers de configuration spécifiques à l'environnement
 .env
 
-cisep/*.json
+cisep/psep-ba755-firebase-adminsdk-2x5cd-7f3ffbf37b.json
 
 # Ignore les fichiers de sauvegarde de l'IDE
 *.swp
