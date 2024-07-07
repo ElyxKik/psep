@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div>
+    <h1 class="font-bold text-3xl mb-10">Institutions</h1>
+    <div class="grid grid-cols-4 gap-2">
+        {% for inst in institutions reversed %}
+        <a href="{% url 'institution_detail' inst.id %}">
+            <div class="border-gray-300 border rounded-md p-4 hover:bg-gray-200">
+                <div class="flex flex-row space-x-2">
+                    <div>
+                        <img src="{% if inst.photo_dirigeant %}{{inst.photo_dirigeant.url}}{% else %}{% static "profil.jpg" %}{% endif %}" class="rounded-full h-10" />
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-700">{{ inst.nom}}</p>
+                        <p class="text-gray-500 text-sm">Par {{ inst.dirigeant }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    
+</div>
+
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <h1 class="font-bold text-3xl mb-10">Tableau de bord</h1>
+    <div class="grid grid-cols-4 gap-2">
+        <div class="flex flex-row space-x-2 border-gray-100 border rounded-sm">
+            <p class="font-medium">{{ nbre_institution }}</p>
+            <p>Institutions</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

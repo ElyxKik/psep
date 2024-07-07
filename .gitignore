@@ -1,0 +1,34 @@
+# Ignore les fichiers générés par Django
+*.pyc
+__pycache__
+
+# Ignore les dossiers de migrations Django
+**/migrations/
+
+# Ignore les fichiers de configuration spécifiques à l'environnement
+.env
+
+# Ignore les fichiers de sauvegarde de l'IDE
+*.swp
+*.swo
+.vscode/
+
+# Ignore les fichiers de dépendances Python
+venv/
+*.venv/
+env/
+
+# Ignore les fichiers de sauvegarde
+*.bak
+
+# Ignore les fichiers de journalisation
+*.log
+
+# Ignore les fichiers de médias téléchargés
+media/
+
+# Ignore les fichiers de données de base de données
+*.sqlite3
+
+# Ignore les fichiers de configuration système
+.DS_Store
