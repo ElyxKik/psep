@@ -8,6 +8,8 @@ __pycache__
 # Ignore les fichiers de configuration spécifiques à l'environnement
 .env
 
+cisep/*.json
+
 # Ignore les fichiers de sauvegarde de l'IDE
 *.swp
 *.swo
