@@ -1,21 +1,42 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ProjetSerializer, JalonsSerializer, TacheSerializer
 
-from theapp.models import Institution, Projet,Jalons, Affectation, Tache
+from theapp.models import Institution, Projet,Jalons, Affectation, Tache, Visite
 from compte.models import AppUser
+from theapp.utils import get_client_ip
 
 # Create your views here.
+
 
 @login_required
 def team_home(request):
     institutions = Institution.objects.all()
+    projet = Projet.objects.all().count
+    membres = AppUser.objects.exclude(is_superuser=True).count
     nbre_institution = institutions.count
+    jalons = Jalons.objects.all()
+    total_jalons = jalons.count()
+    jalons_complets = jalons.filter(est_complet=True).count()
+    
+    if total_jalons > 0:
+        pourcentage_complets = int((jalons_complets / total_jalons) * 100)
+    else:
+        pourcentage_complets = 0
+
+    ip = get_client_ip(request)
+    visite = Visite.objects.create(ip=ip, page="Team_Home")
+    visite.save()
+    
     return render(request, 'team-home.html', {'institutions':institutions,
-                                              'nbre_institution':nbre_institution
+                                              'nbre_institution':nbre_institution,
+                                              'projet':projet,
+                                              'pourcentage_complets':pourcentage_complets,
+                                              'membres':membres
                                               })
 
 @login_required
@@ -28,9 +49,11 @@ def institution_detail(request, id):
     institution = Institution.objects.get(id=id)
     projets = Projet.objects.filter(proprietaire=institution)
     membres = Affectation.objects.filter(institution=institution)
+    count_membres = membres.count()
     return render(request, 'institution-detail.html', {'institution':institution,
                                                        'projets':projets,
-                                                       'membres':membres})
+                                                       'membres':membres,
+                                                       'count_membres': count_membres})
 
 @login_required
 def membres(request):
@@ -79,7 +102,42 @@ def new_jalon(request, id):
         jalon.save()
         return redirect('projet_detail', id)
 
-    
+
+@login_required
+def search(request):
+    query = request.GET.get('query')
+
+    if query:
+        projets = Projet.objects.filter(nom__icontains=query)
+
+    return render(request, 'search.html', {'projets':projets})
+
+
+@login_required
+def projets_list(request):
+    projets = Projet.objects.all()
+    projets_data = []
+
+    for projet in projets:
+        jalons = Jalons.objects.filter(projet=projet)
+        total_jalons = jalons.count()
+        jalons_complets = jalons.filter(est_complet=True).count()
+
+        if total_jalons > 0:
+            pourcentage_complets = int((jalons_complets / total_jalons) * 100)
+        else:
+            pourcentage_complets = 0
+
+        projets_data.append({
+            'projet': projet,
+            'pourcentage_complets': pourcentage_complets,
+        })
+
+    return render(request, 'projets.html', {
+        'projets_data': projets_data
+    })
+
+
 
 @login_required
 def projet_detail(request, id):
@@ -120,10 +178,51 @@ def affectation(request, id):
         return redirect(institution_detail, institution_id)
     
 
-# API 
+@login_required
+def jalon_fini(request, id):
+    jalon = Jalons.objects.get(id=id)
+    jalon.est_complet = True
+    jalon.save()  # Assurez-vous de sauvegarder les changements
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
+
+def progression_institutions(request):
+    institutions = Institution.objects.all()
+    institution_data = []
+
+    for institution in institutions:
+        projets = Projet.objects.filter(proprietaire=institution)
+        total_projets = projets.count()
+        projets_termines = 0
+
+        for projet in projets:
+            jalons = Jalons.objects.filter(projet=projet)
+            total_jalons = jalons.count()
+            jalons_complets = jalons.filter(est_complet=True).count()
+
+            if total_jalons > 0 and total_jalons == jalons_complets:
+                projets_termines += 1
+
+        if total_projets > 0:
+            pourcentage_termines = (projets_termines / total_projets) * 100
+        else:
+            pourcentage_termines = 0
+
+        institution_data.append({
+            'institution': institution,
+            'total_projets': total_projets,
+            'pourcentage_termines': pourcentage_termines
+        })
+
+    return render(request, 'progressions.html', {
+        'institution_data': institution_data
+    })
+
+
+# API VIEW
 
 @api_view(['GET'])
-def projet_detail(request, id):
+def api_projet_detail(request, id):
     try:
         projet = Projet.objects.get(id=id)
     except Projet.DoesNotExist:

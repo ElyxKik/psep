@@ -24,14 +24,18 @@ from compte.views import user_login, signup, logout_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home',team_home, name='team_home' ),
+    path('',team_home, name='team_home' ),
     path('new-organisation', new_organisation, name='new_organisation'),
+    path('search', search, name='search'),
     path('institutions', institutions, name='institutions'),
     path('institution/<int:id>',institution_detail, name='institution_detail' ),
+    path('progressions', progression_institutions, name='progression_institutions'),
     path('new-projet/<int:id>', new_projet, name='new_projet'),
     path('membres', membres, name='membres'),
     path('projet/<int:id>', projet_detail, name='projet_detail'),
+    path('projet/all', projets_list, name='projets_list'),
     path('new-jalon/<int:id>', new_jalon, name='new_jalon'),
+    path('jalon-fini/<int:id>', jalon_fini, name='jalon_fini'),
     path('affectation/<int:id>',affectation, name='affectation'),
     path('profil/<int:id>', profil, name='profil'),
     path('login', user_login, name='login'),
@@ -43,5 +47,5 @@ urlpatterns = [
     path('api/jalons/<int:pk>/', JalonsDetail.as_view(), name='jalons-detail'),
     path('api/taches/', TacheListCreate.as_view(), name='tache-list-create'),
     path('api/taches/<int:pk>/', TacheDetail.as_view(), name='tache-detail'),
-    path('api/projets/<int:id>', projet_detail, name='projet_detail'),
+    path('api/projets/<int:id>', api_projet_detail, name='api_projet_detail'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

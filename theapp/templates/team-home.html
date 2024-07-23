@@ -3,12 +3,54 @@
 
 <div>
     <h1 class="font-bold text-3xl mb-10">Tableau de bord</h1>
-    <div class="grid grid-cols-4 gap-2">
-        <div class="flex flex-row space-x-2 border-gray-100 border rounded-sm">
-            <p class="font-medium">{{ nbre_institution }}</p>
-            <p>Institutions</p>
-        </div>
+    <div class="grid grid-cols-4 gap-2"> 
+        <a href="{% url "institutions" %}"  class="flex flex-row justify-between items-center p-4 border-gray-300 border rounded-lg hover:bg-gray-100">
+            <div class="">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2v14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2V5a1 1 0 0 1-1-1Zm5 2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1Zm-5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1h-1Zm-3 4a2 2 0 0 0-2 2v3h2v-3h2v3h2v-3a2 2 0 0 0-2-2h-2Z" clip-rule="evenodd"/>
+                </svg>
+                <p>Institutions</p>
+            </div>
+            <p class="font-medium text-2xl">{{ nbre_institution }}</p>
+        </a>
+        <a href="{% url "projets_list" %}" class="flex flex-row justify-between items-center p-4 border-gray-300 border rounded-lg hover:bg-gray-100">
+            <div class="">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z" clip-rule="evenodd"/>
+                </svg>
+                <p>Projets</p>
+            </div>
+            <p class="font-medium text-2xl">{{ projet }}</p>
+        </a>
+        <a href="{% url "membres" %}"  class="flex flex-row justify-between items-center p-4 border-gray-300 border rounded-lg">
+            <div class="">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z" clip-rule="evenodd"/>
+                </svg>
+                <p>Membres</p>
+            </div>
+            <p class="font-medium text-2xl">{{ membres }}</p>
+        </a>
+        <a href="{% url "progression_institutions" %}">
+            <div class=" space-y-2 p-4 border-gray-300 border rounded-lg hover:bg-gray-100">
+                <div class="flex flex-row justify-between items-center ">
+                    <div class="">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
+                        </svg>
+                        
+                        <p class="text-sm text-gray-700">Progression Global</p>
+                    </div>
+                    
+                    <p class="font-medium text-2xl">{{ pourcentage_complets }}%</p>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                    <div class="{% if pourcentage_complets < 50 %}bg-red-600{% elif pourcentage_complets < 75 %}bg-yellow-600{% else%}bg-green-600{% endif %} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{pourcentage_complets}}%"> {{pourcentage_complets}}%</div>
+                </div>
+            </div>
+        </a>
     </div>
+    
 </div>
 
 {% endblock content %}

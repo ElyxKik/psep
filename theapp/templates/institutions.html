@@ -10,7 +10,7 @@
             <div class="border-gray-300 border rounded-md p-4 hover:bg-gray-200">
                 <div class="flex flex-row space-x-2">
                     <div>
-                        <img src="{% if inst.photo_dirigeant %}{{inst.photo_dirigeant.url}}{% else %}{% static "profil.jpg" %}{% endif %}" class="rounded-full h-10" />
+                        <img src="{% if inst.photo_dirigeant %}{{inst.photo_dirigeant.url}}{% else %}{% static "profil.jpg" %}{% endif %}" class="rounded-full h-10 w-10" />
                     </div>
                     <div>
                         <p class="font-medium text-gray-700">{{ inst.nom}}</p>

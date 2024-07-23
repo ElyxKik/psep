@@ -83,3 +83,9 @@ class Affectation(models.Model):
     date = models.DateField(auto_now=True)
 
 
+
+class Visite(models.Model):
+    ip = models.CharField(max_length=100)
+    page = models.CharField(max_length=20)
+    date = models.DateTimeField(auto_now=True)
+

@@ -85,6 +85,9 @@
                             Email
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            Role
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Voir
                         </th>
                     </tr>
@@ -100,6 +103,9 @@
                             </td>
                             <td class="px-6 py-4">
                                 {{m.email}}
+                            </td>
+                            <td class="px-6 py-4">
+                                User
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{% url "profil" m.id %}">
