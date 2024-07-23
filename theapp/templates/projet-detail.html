@@ -49,16 +49,16 @@
     </div>
     <div class="lg:flex lg:space-x-4 space-y-4 ">
         <div class="basis-3/4">
-            <h4 class="font-semibold text-base">Description</h4>
-            <p class="font-normal text-sm">{{ projet.description }}</p>
+            <h4 class="font-semibold text-base dark:text-gray-50">Description</h4>
+            <p class="font-normal text-sm dark:text-gray-100">{{ projet.description }}</p>
             <div class="mt-5">
-                <h4 class="font-semibold text-base mb-2">Jalons</h4>
+                <h4 class="font-semibold text-base mb-2 dark:text-gray-50">Jalons</h4>
                     {% if jalons %}
                     <div id="accordion-open" data-accordion="close">
                         {% for jalon in jalons %}
                         <h2 id="accordion-open-heading-1">
                         <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-y border-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-open-body-{{jalon.id}}" aria-expanded="true" aria-controls="accordion-open-body-{{jalon.id}}">
-                            <span class="flex items-center">
+                            <span class="flex items-center dark:text-white ">
                                 <svg class="w-5 h-5 {% if jalon.est_complet %} text-green-600 {% else %}text-gray-500 dark:text-white {% endif %} me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
                                   </svg>

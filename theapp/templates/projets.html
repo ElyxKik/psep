@@ -3,7 +3,7 @@
 
 <div>
     <div class="lg:flex lg:flex-row justify-between space-y-2 items-center mb-10">
-        <h1 class="font-bold text-3xl basis-1/3">Projets</h1>
+        <h1 class="font-bold text-3xl basis-1/3 dark:text-gray-50">Projets</h1>
         
         <form class="max-w-2xl basis-2/3 justify-self-center" method="get" action="{% url "search" %}">
                 <div class="flex flex-row">
@@ -17,17 +17,21 @@
         </form>
     </div>
     <div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
-            {% for projet_data in projets_data %}
-            <a href="{% url "projet_detail" projet_data.projet.id %}"> 
-                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-200">
-                    <p class="font-semibold">{{ projet_data.projet.nom }}</p>
-                    <p class="text-xs">Dirigé par <span class="font-medium">{{projet_data.projet.proprietaire}}</span></p>
-                    <div class="mt-4 {% if projet_data.pourcentage_complets < 50 %}bg-red-600{% elif projet_data.pourcentage_complets < 75 %}bg-yellow-600{% else%}bg-green-600{% endif %} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{projet_data.pourcentage_complets}}%"> {{projet_data.pourcentage_complets}}%</div>
-                </div>
-            </a>
-            {% endfor %}
+        {% if projets_data %}
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
+                {% for projet_data in projets_data %}
+                <a href="{% url "projet_detail" projet_data.projet.id %}"> 
+                    <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-200">
+                        <p class="font-semibold dark:text-gray-100">{{ projet_data.projet.nom }}</p>
+                        <p class="text-xs dark:text-gray-200">Dirigé par <span class="font-medium">{{projet_data.projet.proprietaire}}</span></p>
+                        <div class="mt-4 {% if projet_data.pourcentage_complets < 50 %}bg-red-600{% elif projet_data.pourcentage_complets < 75 %}bg-yellow-600{% else%}bg-green-600{% endif %} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{projet_data.pourcentage_complets}}%"> {{projet_data.pourcentage_complets}}%</div>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
+        {% else %}
+            <p class="font-extralight text-sm text-gray-600 dark:text-gray-100">Aucun projet n'a été créer pour l'instant</p>
+        {% endif %}
     </div>
 </div>
 
