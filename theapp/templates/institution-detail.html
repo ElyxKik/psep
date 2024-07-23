@@ -2,7 +2,7 @@
 {% block content %}
 
 <div>
-    <div class="flex flex-row justify-between mb-10">
+    <div class="lg:flex lg:flex-row space-y-2 justify-between mb-10">
         <div>
             <h1 class="font-bold text-3xl">{{institution.nom}}</h1>
             <p class="font-extralight text-sm text-gray-600">{{institution.description}}</p>
@@ -47,28 +47,27 @@
             </div>
           </div>
     </div>
-    <div class="flex">
+    <div class="lg:flex space-y-6 lg:space-y-0">
         <div class="basis-3/4">
             <h3 class="font-bold text-xl mb-5">Projets</h3>
-            <div class="grid grid-cols-3 gap-2">
+            {% if projets %}
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
                 {% for p in projets reversed %}
-                <a href="{% url "projet_detail" p.id %}">
-                    <div class="border-gray-300 border rounded-md p-4 hover:bg-gray-200">
-                        <p class="font-semibold">{{p.nom}}</p>
-                        <p class="text-sm font-light">{{p.description}}</p>
-                        <div class="flex flex-row space-x-1 items-center">
-                            <svg class="w-3 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                            </svg>
-                            <span class="text-xs font-normal text-gray-600">Du {{p.date_debut}} Au {{p.date_fin}} </span>
-                        </div>
+                <a href="{% url "projet_detail" p.id %}" class="border-gray-300 border rounded-md p-4 hover:bg-gray-200">
+                    <p class="font-semibold">{{p.nom|truncatechars:34}}</p>
+                    <p class="text-sm">{{p.description|truncatechars:76}}</p>
+                    <div class="flex flex-row space-x-1 items-center">
+                        <svg class="w-3 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <span class="text-xs font-normal text-gray-600">Du {{p.date_debut}} Au {{p.date_fin}} </span>
                     </div>
                 </a>
-                {% empty %}
-            
+                {% endfor %}
+            </div>
+            {% else %}
                 <p class="font-extralight text-sm text-gray-600">Cette institution n'a aucun projet pour l'instant</p>
-            {% endfor %}
-        </div>
+            {% endif %}
         </div>
         <div class="basis-1/4">
             <div class="border border-gray-300 rounded-md p-2">
