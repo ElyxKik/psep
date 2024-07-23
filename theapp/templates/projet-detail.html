@@ -5,8 +5,8 @@
     <div class=" mb-10">
         <div class="lg:flex justify-between items-center">
             <h1 class="flex flex-col">
-                <a href="{% url "institution_detail" projet.proprietaire.id %}" class="hover:text-gray-600 hover:underline"><span>{{projet.proprietaire}}</span></a>
-                <span class="font-bold text-xl mb-4">{{projet.nom}}</span>
+                <a href="{% url "institution_detail" projet.proprietaire.id %}" class="hover:text-gray-600 hover:underline dark:text-gray-50"><span>{{projet.proprietaire}}</span></a>
+                <span class="font-bold text-xl mb-4 dark:text-white">{{projet.nom}}</span>
             </h1>
             <div>
                 <button type="button" data-modal-target="projet-modal" data-modal-toggle="projet-modal" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+ Jalon</button>
@@ -49,10 +49,10 @@
     </div>
     <div class="lg:flex lg:space-x-4 space-y-4 ">
         <div class="basis-3/4">
-            <h4 class="font-semibold text-base dark:text-gray-50">Description</h4>
-            <p class="font-normal text-sm dark:text-gray-100">{{ projet.description }}</p>
+            <h4 class="font-semibold text-base dark:text-white">Description</h4>
+            <p class="font-normal text-sm dark:text-gray-50">{{ projet.description }}</p>
             <div class="mt-5">
-                <h4 class="font-semibold text-base mb-2 dark:text-gray-50">Jalons</h4>
+                <h4 class="font-semibold text-base mb-2 dark:text-white">Jalons</h4>
                     {% if jalons %}
                     <div id="accordion-open" data-accordion="close">
                         {% for jalon in jalons %}
@@ -71,28 +71,28 @@
                         </h2>
                         <div id="accordion-open-body-{{jalon.id}}" class="hidden" aria-labelledby="accordion-open-heading-1">
                         <div class="p-5 border border-y border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                            <p class=" text-sm mb-1 text-gray-500 dark:text-gray-400">{{jalon.description}}</p>
+                            <p class=" text-sm mb-1 text-gray-500 dark:text-gray-50">{{jalon.description}}</p>
                             {% if not jalon.est_complet %}<p class="hover:underline text-sm font-medium"><a href="{% url "jalon_fini" jalon.id %}">Terminé</a></p>{% endif%}
                             <div class="mt-5">
-                                <h5 class="text-base font-medium">Taches</h5>
+                                <h5 class="text-base font-medium dark:text-white">Taches</h5>
                                 {% for tache in taches  %}
                                     <ol class="relative border-s border-gray-200 dark:border-gray-700">                  
                                         <li class="mb-10 ms-4">
                                             <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                                            <time class="mb-1 text-xs font-light leading-none text-gray-400 dark:text-gray-500">{{tache.date_echeance}}</time>
+                                            <time class="mb-1 text-xs font-light leading-none text-gray-400 dark:text-gray-100">{{tache.date_echeance}}</time>
                                             <h3 class="text-sm font-semibold text-gray-900 dark:text-white">{{tache.nom}}</h3>
-                                            <p class="text-xs font-normal text-gray-500 dark:text-gray-400">{{tache.description}}</p>
+                                            <p class="text-xs font-normal text-gray-500 dark:text-gray-50">{{tache.description}}</p>
                                         </li>
                                     </ol>
                                 {% endfor %}
-                                <p class="text-xs font-light">Aucune tache pour le moment</p>
+                                <p class="text-xs font-light dark:text-gray-50">Aucune tache pour le moment</p>
                             </div>
                         </div>
                         </div>
                         {% endfor %}
                     </div>
                     {% else %}
-                    <p class="text-xs font-light">Aucun jalon pour ce projet</p>
+                    <p class="text-xs font-light dark:text-gray-50">Aucun jalon pour ce projet</p>
                     {% endif %}
   
 
@@ -100,19 +100,19 @@
         </div>
         <div class="basis-1/4 space-y-2">
             <div class="border border-gray-300 rounded-md p-2">
-                <h4 class="font-semibold mb-2">Progrésion</h4>
+                <h4 class="font-semibold mb-2 dark:text-white">Progrésion</h4>
                 <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                     <div class="{% if pourcentage_complets < 50 %}bg-red-600{% elif pourcentage_complets < 75 %}bg-yellow-600{% else%}bg-green-600{% endif %} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{pourcentage_complets}}%"> {{pourcentage_complets}}%</div>
                 </div>
 
             </div>
             <div class="border border-gray-300 rounded-md p-2">
-                <h4 class="font-semibold">Echéance</h4>
+                <h4 class="font-semibold dark:text-white">Echéance</h4>
                 <div class="flex flex-row items-center space-x-2">
                     <svg class="w-4 h-5 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M4 9.05H3v2h1v-2Zm16 2h1v-2h-1v2ZM10 14a1 1 0 1 0 0 2v-2Zm4 2a1 1 0 1 0 0-2v2Zm-3 1a1 1 0 1 0 2 0h-2Zm2-4a1 1 0 1 0-2 0h2Zm-2-5.95a1 1 0 1 0 2 0h-2Zm2-3a1 1 0 1 0-2 0h2Zm-7 3a1 1 0 0 0 2 0H6Zm2-3a1 1 0 1 0-2 0h2Zm8 3a1 1 0 1 0 2 0h-2Zm2-3a1 1 0 1 0-2 0h2Zm-13 3h14v-2H5v2Zm14 0v12h2v-12h-2Zm0 12H5v2h14v-2Zm-14 0v-12H3v12h2Zm0 0H3a2 2 0 0 0 2 2v-2Zm14 0v2a2 2 0 0 0 2-2h-2Zm0-12h2a2 2 0 0 0-2-2v2Zm-14-2a2 2 0 0 0-2 2h2v-2Zm-1 6h16v-2H4v2ZM10 16h4v-2h-4v2Zm3 1v-4h-2v4h2Zm0-9.95v-3h-2v3h2Zm-5 0v-3H6v3h2Zm10 0v-3h-2v3h2Z"/>
                     </svg>                      
-                    <p class="text-xs font-normal text-gray-600">{{ projet.date_debut }} - {{ projet.date_fin }}</p>
+                    <p class="text-xs font-normal text-gray-600 dark:text-gray-50">{{ projet.date_debut }} - {{ projet.date_fin }}</p>
                 </div>
             </div>
         </div>
