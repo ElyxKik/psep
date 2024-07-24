@@ -36,9 +36,9 @@ def generate_password(length=8):
 
 @login_required
 def signup(request):
-    if  request.user.is_superuser:
-        messages.error(request, "Vous n'avez pas les permissions nécessaires pour créer un compte.")
-        return redirect('team_home')
+    # if  request.user.is_superuser:
+    #    messages.error(request, "Vous n'avez pas les permissions nécessaires pour créer un compte.")
+    #    return redirect('team_home')
 
     if request.method == 'POST':
         first_name = request.POST.get('nom')
