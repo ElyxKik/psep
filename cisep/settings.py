@@ -17,7 +17,7 @@ from firebase_admin import credentials
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-FIREBASE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'cisep/psep-ba755-firebase-adminsdk-2x5cd-7f3ffbf37b.json')
+FIREBASE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'cisep/psep-ba755-firebase-adminsdk-2x5cd-950acb606d.json')
 
 cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
 firebase_admin.initialize_app(cred)
