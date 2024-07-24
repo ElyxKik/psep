@@ -71,7 +71,8 @@
                         </h2>
                         <div id="accordion-open-body-{{jalon.id}}" class="hidden" aria-labelledby="accordion-open-heading-1">
                         <div class="p-5 border border-y border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                            <p class=" text-sm mb-1 text-gray-500 dark:text-gray-50">{{jalon.description}}</p>
+                            <p class=" text-sm mb-1 text-gray-600 dark:text-gray-50">{{jalon.description}}</p>
+                            <p class=" text-xs mb-1 text-gray-500 dark:text-gray-50">Date Limite : <span class="font-medium">{{jalon.date_echeance}}</span></p>
                             {% if not jalon.est_complet %}<p class="hover:underline text-sm font-medium"><a href="{% url "jalon_fini" jalon.id %}">Terminé</a></p>{% endif%}
                             <div class="mt-5">
                                 <h5 class="text-base font-medium dark:text-white">Taches</h5>

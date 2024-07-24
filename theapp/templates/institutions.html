@@ -14,7 +14,7 @@
                         <img src="{% if inst.photo_dirigeant %}{{inst.photo_dirigeant.url}}{% else %}{% static "profil.jpg" %}{% endif %}" class="rounded-full h-10 w-10" />
                     </div>
                     <div>
-                        <p class="font-medium text-gray-700 dark:text-gray-50">{{ inst.nom|truncatechars:34}}</p>
+                        <p class="font-medium text-gray-700 dark:text-gray-50">{{ inst.nom|truncatechars:30}}</p>
                         <p class="text-gray-500 text-sm dark:text-gray-50">Par {{ inst.dirigeant|truncatechars:32 }}</p>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
         {% endfor %}
     </div>
     {% else %}
-        <p class="font-extralight text-sm text-gray-600 dark:text-gray-100">Aucune institution n'a été créer pour l'instant</p>
+        <p class="font-light text-sm text-gray-600 dark:text-gray-100">Aucune institution n'a été créer pour l'instant</p>
     {% endif %}
     
 </div>
