@@ -16,15 +16,23 @@ from theapp.utils import get_client_ip
 @login_required
 def team_home(request):
     institutions = Institution.objects.all()
-    projet = Projet.objects.all().count
+    projets = Projet.objects.all()
+    nombre_projet = projets.count
     membres = AppUser.objects.exclude(is_superuser=True).count
     nbre_institution = institutions.count
-    jalons = Jalons.objects.all()
-    total_jalons = jalons.count()
-    jalons_complets = jalons.filter(est_complet=True).count()
-    
-    if total_jalons > 0:
-        pourcentage_complets = int((jalons_complets / total_jalons) * 100)
+    total_projets = projets.count()
+    projets_termines = 0
+
+    for projet in projets:
+        jalons = Jalons.objects.filter(projet=projet)
+        total_jalons = jalons.count()
+        jalons_complets = jalons.filter(est_complet=True).count()
+
+        if total_jalons > 0 and total_jalons == jalons_complets:
+            projets_termines += 1
+
+    if total_projets > 0:
+        pourcentage_complets = (projets_termines / total_projets) * 100
     else:
         pourcentage_complets = 0
 
@@ -34,7 +42,7 @@ def team_home(request):
     
     return render(request, 'team-home.html', {'institutions':institutions,
                                               'nbre_institution':nbre_institution,
-                                              'projet':projet,
+                                              'nombre_projet':nombre_projet,
                                               'pourcentage_complets':pourcentage_complets,
                                               'membres':membres
                                               })
@@ -43,6 +51,7 @@ def team_home(request):
 def institutions(request):
     institutions = Institution.objects.all()
     return render(request, 'institutions.html', {'institutions':institutions})
+
 
 @login_required
 def institution_detail(request, id):
@@ -59,6 +68,7 @@ def institution_detail(request, id):
 def membres(request):
     membres = AppUser.objects.exclude(is_superuser=True)
     return render(request, 'membres.html', {'membres': membres})
+
 
 @login_required
 def new_organisation(request):
