@@ -51,7 +51,7 @@ def signup(request):
         # Créer un nouvel utilisateur dans Django
         user = AppUser.objects.create_user(first_name=first_name, email=email, username=username, password=password)
         
-        try:
+        """ try:
             # Créer un nouvel utilisateur Firebase
             user_record = auth.create_user(
                 email=email,
@@ -81,7 +81,8 @@ def signup(request):
         except Exception as e:
             messages.error(request, f"Une erreur s'est produite lors de la création de l'utilisateur Firebase : {e}")
             user.delete()  # Supprimer l'utilisateur Django si la création de l'utilisateur Firebase échoue
-
+        """
+        messages.success(request, f"Le compte de {first_name} a été créé avec succès. Username : {username} | Mot de passe : {password}")
         # Rediriger vers la page 'membres'
         return redirect('membres')
     
