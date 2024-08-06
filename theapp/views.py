@@ -5,6 +5,9 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import ProjetSerializer, JalonsSerializer, TacheSerializer
+import plotly.graph_objs as go
+from plotly.offline import plot
+import pandas as pd
 
 from theapp.models import Institution, Projet,Jalons, Affectation, Tache, Visite
 from compte.models import AppUser
@@ -200,23 +203,41 @@ def progression_institutions(request):
     institutions = Institution.objects.all()
     institution_data = []
 
+    # Obtenir le trimestre à partir des paramètres de la requête
+    trimestre = request.GET.get('trimestre', 'all')
+    year = request.GET.get('year', None)
+
+    noms_institutions = []
+    total_projets_list = []
+    pourcentage_termines_list = []
+
     for institution in institutions:
         projets = Projet.objects.filter(proprietaire=institution)
-        total_projets = projets.count()
+        
+        if year:
+            projets = projets.filter(date_debut__year=year)
+
         projets_termines = 0
 
         for projet in projets:
-            jalons = Jalons.objects.filter(projet=projet)
+            if trimestre != 'all':
+                debut_trimestre, fin_trimestre = get_trimestre_dates(int(trimestre), int(year))
+                jalons = Jalons.objects.filter(projet=projet, date_echeance__range=(debut_trimestre, fin_trimestre))
+            else:
+                jalons = Jalons.objects.filter(projet=projet)
+
             total_jalons = jalons.count()
             jalons_complets = jalons.filter(est_complet=True).count()
 
             if total_jalons > 0 and total_jalons == jalons_complets:
                 projets_termines += 1
 
-        if total_projets > 0:
-            pourcentage_termines = (projets_termines / total_projets) * 100
-        else:
-            pourcentage_termines = 0
+        total_projets = projets.count()
+        pourcentage_termines = (projets_termines / total_projets) * 100 if total_projets > 0 else 0
+
+        noms_institutions.append(institution.nom)
+        total_projets_list.append(total_projets)
+        pourcentage_termines_list.append(pourcentage_termines)
 
         institution_data.append({
             'institution': institution,
@@ -224,9 +245,36 @@ def progression_institutions(request):
             'pourcentage_termines': pourcentage_termines
         })
 
+    # Graphique en barres
+    bar_fig = go.Figure([go.Bar(x=noms_institutions, y=total_projets_list)])
+    bar_div = plot(bar_fig, output_type='div')
+
+    # Graphique en donut
+    donut_fig = go.Figure(data=[go.Pie(labels=noms_institutions, values=pourcentage_termines_list, hole=.3)])
+    donut_div = plot(donut_fig, output_type='div')
+
+    # Graphique en lignes (progression des projets terminés)
+    line_fig = go.Figure(data=go.Scatter(x=noms_institutions, y=pourcentage_termines_list, mode='lines+markers'))
+    line_div = plot(line_fig, output_type='div')
+
     return render(request, 'progressions.html', {
-        'institution_data': institution_data
+        'institution_data': institution_data,
+        'bar_div': bar_div,
+        'donut_div': donut_div,
+        'line_div': line_div,
+        'selected_trimestre': trimestre,
+        'selected_year': year
     })
+
+def get_trimestre_dates(trimestre, year):
+    if trimestre == 1:
+        return pd.Timestamp(year, 1, 1), pd.Timestamp(year, 3, 31)
+    elif trimestre == 2:
+        return pd.Timestamp(year, 4, 1), pd.Timestamp(year, 6, 30)
+    elif trimestre == 3:
+        return pd.Timestamp(year, 7, 1), pd.Timestamp(year, 9, 30)
+    elif trimestre == 4:
+        return pd.Timestamp(year, 10, 1), pd.Timestamp(year, 12, 31)
 
 
 # API VIEW
