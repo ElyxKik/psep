@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 
-<div class="mb-10">
+<div class="h-full">
     <h1 class="font-bold text-3xl mb-10 dark:text-white">Progressions</h1>
     <div>
         <form method="get" class="mb-4 p-4 bg-white rounded shadow-md flex items-center space-x-4">
@@ -24,25 +24,22 @@
                 <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Filtrer</button>
             </div>
         </form>
-        <div class="grid md:grid-cols-2">
-            <div>
-                <h2>Graphique en barres</h2>
+        <div class="grid md:grid-cols-2 gap-2 mb-10">
+            <div class="border border-gray-200 rounded-lg p-2">
                 {{ bar_div|safe }}
             </div>
             
-            <div>
-                <h2>Graphique en donut</h2>
+            <div class="border border-gray-200 rounded-lg p-2">
                 {{ donut_div|safe }}
             </div>
             
-            <div>
-                <h2>Graphique en lignes</h2>
+            <div class="border border-gray-200 rounded-lg p-2">
                 {{ line_div|safe }}
             </div>
         </div>
 
         {% if institution_data %}
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 pb-20">
                 {% for data in institution_data %}
                     <a href="{% url "institution_detail" data.institution.id %}" class="border border-gray-200 rounded-lg p-4 hover:bg-gray-200">
                         <p class="font-semibold dark:text-white">{{ data.institution.nom|truncatechars:34}}</p>
